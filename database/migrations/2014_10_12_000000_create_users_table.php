@@ -14,9 +14,17 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('nip');
+            $table->string('pangkat');
+            $table->string('jabatan');
+            $table->string('satuan_organisasi');
+            $table->integer('saldo_cuti')->default(12);
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->enum('level', ['guru', 'admin', 'kepala sekolah']);
+            $table->string('foto')->nullable();
+            $table->enum('active', [0, 1])->default(1);
             $table->rememberToken();
             $table->timestamps();
         });

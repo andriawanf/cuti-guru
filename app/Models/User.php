@@ -19,8 +19,12 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'nip',
         'email',
         'password',
+        'level',
+        'saldo_cuti',
+        'active',
     ];
 
     /**
@@ -41,4 +45,9 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function cuti()
+    {
+        return $this->hasMany(Cuti::class);
+    }
 }
