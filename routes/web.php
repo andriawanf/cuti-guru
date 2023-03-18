@@ -28,6 +28,7 @@ Route::post('/authenticate', [LoginController::class, 'authenticate'])->name('au
 Route::get('/admin/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 Route::get('/guru/home', [HomeController::class, 'index'])->name('home');
 Route::get('/cuti', [CutiController::class, 'index'])->name('cuti');
+Route::post('/cuti', [CutiController::class, 'addCuti'])->name('cuti.add');
 Route::post('/category', [CutiController::class, 'category'])->name('category');
 
 Route::get('/logout', function () {

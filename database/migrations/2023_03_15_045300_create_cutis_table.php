@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('file')->nullable();
             $table->string('status');
             $table->bigInteger('durasi_cuti');
+            $table->timestamps();
             $table->unsignedBigInteger('cat_id');
             $table->foreign('cat_id')->references('id')->on('categories');
             $table->unsignedBigInteger('sub_id')->nullable();
