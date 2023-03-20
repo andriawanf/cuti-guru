@@ -1,9 +1,60 @@
-@if ($id == 1)
-    <div class="mb-6">
-        <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
-        <input type="email" id="email"
-            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder="name@flowbite.com" required>
+@if($id == 1)
+<div class="mb-3 row">
+    <label class="form-label">Tanggal Cuti</label>
+    <div class="input-daterange input-group" id="datepicker6" data-date-format="yyyy-m-dd" data-date-autoclose="true" data-provide="datepicker" data-date-container='#datepicker6'>
+        <input type="text" class="form-control" name="from" placeholder="Tanggal Mulai" />
+        <input type="text" class="form-control" name="to" placeholder="Tanggal Akhir" />
     </div>
+</div>
+<div class="mb-3 row">
+    <label class="form-label" id="durasi_cuti">Durasi Cuti</label>
+    <div class="input-group">
+        <input class="form-control" type="text" name="durasi_cuti" placeholder="Durasi Cuti" id="durasi_cuti">
+    </div>
+</div>
+<div class="mb-3 row">
+    <label class="form-label" id="alasan">Alasan Cuti</label>
+    <div class="input-group">
+        <input class="form-control" type="text" name="alasan" placeholder="Alasan Cuti" id="alasan">
+    </div>
+</div>
+@elseif($id == 2)
+<div class="mb-3 row">
+    <label id="subcategory" class="form-label">Kategori Cuti</label>
+    <div class="col-md-12">
+        <select name="subcategory" id="subcategory" class="form-select">
+            <option value="0">Pilih Kategori</option>
+            @foreach($subcategory as $val)
+            <option value="{{$val->id}}">{{$val->title}}</option>
+            @endforeach
+        </select>
+    </div>
+</div>
+<div class="mb-3 row">
+    <label class="form-label">Tanggal Cuti</label>
+    <div class="input-daterange input-group" id="datepicker6" data-date-format="yyyy-m-dd" data-date-autoclose="true" data-provide="datepicker" data-date-container='#datepicker6'>
+        <input type="text" class="form-control" name="from" placeholder="Tanggal Mulai" />
+        <input type="text" class="form-control" name="to" placeholder="Tanggal Akhir" />
+    </div>
+</div>
+<div class="mb-3 row">
+    <label class="form-label" id="durasi_cuti">Durasi Cuti</label>
+    <div class="input-group">
+        <input class="form-control" type="text" name="durasi_cuti" placeholder="Durasi Cuti" id="durasi_cuti">
+    </div>
+</div>
+<div class="mb-3 row">
+    <label class="form-label" id="alasan">Alasan Cuti</label>
+    <div class="input-group">
+        <input class="form-control" type="text" name="alasan" placeholder="Alasan Cuti" id="alasan">
+    </div>
+</div>
+<div class="mb-3 row">
+    <label class="form-label" id="alasan">Surat Cuti</label>
+    <div class="input-group">
+        <input class="form-control" type="file" name="file" placeholder="Alasan Cuti" id="alasan">
+    </div>
+</div>
 @else
+<span>Silahkan Pilih Kategory</span>
 @endif

@@ -11,6 +11,8 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.4/flowbite.min.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.4/datepicker.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 </head>
 
 <body>
@@ -18,32 +20,32 @@
     <form method="POST" enctype="multipart/form-data" action="{{ route('cuti.add') }}">
         @csrf
         <div class="row">
-            <div class="col-lg-12">                    
-                @if(count($errors) > 0)
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    <ul>
-                        @foreach($errors->all() as $message)
-                            <li>{{ $message }}</li>
-                        @endforeach
-                    </ul>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
+            <div class="col-lg-12">
+                @if (count($errors) > 0)
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <ul>
+                            @foreach ($errors->all() as $message)
+                                <li>{{ $message }}</li>
+                            @endforeach
+                        </ul>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
                 @endif
-                @if(session('success'))
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    <i class="uil uil-check me-2"></i>
-                    {{session('success')}}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
-                    </button>
-                </div>
+                @if (session('success'))
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <i class="uil uil-check me-2"></i>
+                        {{ session('success') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                        </button>
+                    </div>
                 @endif
-                @if(session('error'))
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    <i class="uil uil-exclamation-octagon me-2"></i>
-                    {{session('error')}}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
-                    </button>
-                </div>
+                @if (session('error'))
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <i class="uil uil-exclamation-octagon me-2"></i>
+                        {{ session('error') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                        </button>
+                    </div>
                 @endif
             </div>
         </div>
@@ -58,11 +60,12 @@
                 </select>
             </div>
         </div>
-        <div id="divFrm1" class="form-group form-duration-div" style="display:none">
+        <div id="isi"></div>
+        {{-- <div id="divFrm1" class="form-group form-duration-div" style="display:none">
             <div class="mb-3 row">
                 <label class="form-label">Tanggal Cuti</label>
 
-                <div date-rangepicker datepicker-autohide   datepicker-format="yyyy/mm/dd" class="flex items-center">
+                <div date-rangepicker datepicker-autohide datepicker-format="yyyy/mm/dd" class="flex items-center">
                     <div class="relative">
                         <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                             <svg aria-hidden="true" class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="currentColor"
@@ -103,11 +106,11 @@
             <div class="mb-3 row">
                 <label class="form-label" id="alasan">Alasan Cuti</label>
                 <div class="input-group">
-                    <input class="form-control" type="text" name="alasan" placeholder="Alasan Cuti"
-                        id="alasan">
+                    <input class="form-control" type="text" name="alasan" placeholder="Alasan Cuti" id="alasan">
                 </div>
             </div>
         </div>
+
         <div id="divFrm2" class="form-group form-duration-div" style="display:none">
             <div class="mb-3 row">
                 <label id="subcategory" class="form-label">Kategori Cuti</label>
@@ -120,7 +123,7 @@
                     </select>
                 </div>
             </div>
-            <div date-rangepicker datepicker-autohide   datepicker-format="yyyy/mm/dd" class="flex items-center">
+            <div date-rangepicker datepicker-autohide datepicker-format="yyyy/mm/dd" class="flex items-center">
                 <div class="relative">
                     <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                         <svg aria-hidden="true" class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="currentColor"
@@ -170,33 +173,34 @@
                         id="alasan">
                 </div>
             </div>
-        </div>
+        </div> --}}
         <button type="submit"
-                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
+            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
     </form>
 
-    <script>
-        $(function() {
-
-            // run on change for the selectbox
-            $("#frm_duration").change(function() {
-                updateDurationDivs();
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {    
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
             });
-
-            // handle the updating of the duration divs
-            function updateDurationDivs() {
-                // hide all form-duration-divs
-                $('.form-duration-div').hide();
-
-                var divKey = $("#frm_duration option:selected").val();
-                $('#divFrm' + divKey).show();
-            }
-
-            // run at load, for the currently selected div to show up
-            updateDurationDivs();
-
+            $('#frm_duration').on('change',function() {
+                var cat_id = this.value;
+                $.ajax({
+                    url:"{{ route('category') }}",
+                    type:"GET",
+                    data: {
+                        cat_id: cat_id
+                    },
+                    success:function (data) {
+                        $('#isi').html(data);
+                    }
+                })
+            });
         });
-    </script>
+     </script>
 </body>
 
 </html>
