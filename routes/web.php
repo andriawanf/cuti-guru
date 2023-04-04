@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\admin\CutiListController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CutiController;
@@ -38,6 +39,11 @@ Route::post('/guru/cuti-tahunan', [CutiTahunanController::class, 'cutiTahunan'])
 
 Route::get('/guru/cuti-lainnya', [CutiLainnyaController::class, 'index'])->name('guru.cuti-lainnya');
 Route::post('/guru/cuti-lainnya', [CutiLainnyaController::class, 'cutiLainnya'])->name('guru.cutilainnya');
+
+Route::get('/admin/list-cuti', [CutiListController::class, 'index'])->name('admin.list-cuti');
+Route::post('/leave-requests/{request}/approve', [CutiListController::class, 'approve'])->name('leave-requests.approve');
+Route::post('/leave-requests/{request}/disapprove', [CutiListController::class, 'disapprove'])->name('leave-requests.disapprove');
+
 
 Route::get('/logout', function () {
     Auth::logout();
