@@ -168,7 +168,7 @@ class CutiController extends Controller
     public function history()
     {
         $cuti = Cuti::where('user_id', Auth::user()->id)->with(['category', 'subcategory'])->get();
-        return view('cuti.history', [
+        return view('guru.history', [
             'cuti' => $cuti,
         ]);
     }

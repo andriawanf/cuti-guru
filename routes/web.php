@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CutiController;
+use App\Http\Controllers\CutiTahunanController;
+use App\Http\Controllers\CutiLainnyaController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\DashboardController;
@@ -30,6 +32,12 @@ Route::get('/guru/home', [HomeController::class, 'index'])->name('home');
 Route::get('/cuti', [CutiController::class, 'index'])->name('cuti');
 Route::post('/cuti', [CutiController::class, 'addCuti'])->name('cuti.add');
 Route::get('/category', [CutiController::class, 'category'])->name('category');
+Route::get('/guru/history', [CutiController::class, 'history'])->name('guru.history');
+Route::get('/guru/cuti-tahunan', [CutiTahunanController::class, 'index'])->name('guru.cuti-tahunan');
+Route::post('/guru/cuti-tahunan', [CutiTahunanController::class, 'cutiTahunan'])->name('guru.cutitahunan');
+
+Route::get('/guru/cuti-lainnya', [CutiLainnyaController::class, 'index'])->name('guru.cuti-lainnya');
+Route::post('/guru/cuti-lainnya', [CutiLainnyaController::class, 'cutiLainnya'])->name('guru.cutilainnya');
 
 Route::get('/logout', function () {
     Auth::logout();
