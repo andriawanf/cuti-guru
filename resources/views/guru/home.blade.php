@@ -24,20 +24,20 @@
             <div class="font-roboto grid grid-cols-3 gap-4 mb-4">
                 <div
                     class="flex flex-col space-y-2 items-center justify-center h-24 rounded bg-gray-50 dark:bg-gray-800">
+                    <h1 class="font-medium text-2xl">Jabatan</h1>
+                    <p class="text-2xl font-medium text-black">{{ Auth::user()->jabatan }}</p>
+                </div>
+                <div
+                    class="flex flex-col space-y-2 items-center justify-center h-24 rounded bg-gray-50 dark:bg-gray-800">
                     <h1 class="font-medium text-2xl">Saldo Cuti</h1>
-                    <p class="text-2xl font-medium text-black counter" data-val="{{ Auth::user()->saldo_cuti }}">
-                        00</p>
+                    <span class="text-2xl font-medium text-black counter" data-val="{{ Auth::user()->saldo_cuti }}">
+                        00</span>
                 </div>
                 <div
                     class="flex flex-col space-y-2 items-center justify-center h-24 rounded bg-gray-50 dark:bg-gray-800">
                     <h1 class="font-medium text-2xl">Riwayat Pengajuan</h1>
                     <p class="text-2xl font-medium text-black counter" data-val="{{ Auth::user()->cuti->count() }}">
                         0</p>
-                </div>
-                <div
-                    class="flex flex-col space-y-2 items-center justify-center h-24 rounded bg-gray-50 dark:bg-gray-800">
-                    <h1 class="font-medium text-2xl">Jabatan</h1>
-                    <p class="text-2xl font-medium text-black">{{ Auth::user()->jabatan }}</p>
                 </div>
             </div>
             <div class="flex items-center justify-center h-56 mb-4 rounded bg-gray-50 dark:bg-gray-800">
