@@ -109,9 +109,11 @@
         </div>
         <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
             <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                <caption class="p-5 text-lg font-semibold text-left text-gray-900 bg-white dark:text-white dark:bg-gray-800">
+                <caption
+                    class="p-5 text-lg font-semibold text-left text-gray-900 bg-white dark:text-white dark:bg-gray-800">
                     Riwayat Pengajuan Cuti
-                    <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Riwayat pengajuan cuti kamu selama ini.</p>
+                    <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Riwayat pengajuan cuti kamu
+                        selama ini.</p>
                 </caption>
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
@@ -146,65 +148,74 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse ($cuti as $i => $item )
-                    <tr
-                        class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                        <td class="w-4 p-4">
-                            <div class="flex items-center">
-                                <input id="checkbox-table-search-1" type="checkbox"
-                                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
-                            </div>
-                        </td>
-                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            {{ $item->category->title }}
-                        </th>
-                        <td class="px-6 py-4">
-                            @if ($item->subcategory == null)
-                                {{'Tidak ada subcategory'}}
-                            @else
-                                {{ $item->subcategory->title }}
-                            @endif
-                        </td>
-                        <td class="px-6 py-4 truncate">
-                            {{ $item->alasan }}
-                        </td>
-                        <td class="px-6 py-4">
-                            {{ $item->durasi_cuti }}
-                        </td>
-                        <td class="px-6 py-4">
-                            {{ $item->from }}
-                        </td>
-                        <td class="px-6 py-4">
-                            {{ $item->to }}
-                        </td>
-                        <td class="px-6 py-4">
-                            @if ($item->status == 'pending')
-                                <span class="px-2 py-1 font-semibold leading-tight text-yellow-700 bg-yellow-100 rounded-sm dark:bg-yellow-700 dark:text-yellow-100">
-                                    Pending
-                                </span>
-                            @elseif($item->status == 'approved')
-                                <span class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-sm dark:bg-green-700 dark:text-green-100">
-                                    Approved
-                                </span>
-                            @else
-                                <span class="px-2 py-1 font-semibold leading-tight text-red-700 bg-red-100 rounded-sm dark:bg-red-700 dark:text-red-100">
-                                    Rejected
-                                </span>
-                            @endif
-                        </td>
-                        <td class="px-6 py-4">
-                            <a href="#"
-                                class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-                        </td>
-                    </tr>
-                        
+                    @forelse ($cuti as $i => $item)
+                        <tr
+                            class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                            <td class="w-4 p-4">
+                                <div class="flex items-center">
+                                    <input id="checkbox-table-search-1" type="checkbox"
+                                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                    <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
+                                </div>
+                            </td>
+                            <th scope="row"
+                                class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                {{ $item->category->title }}
+                            </th>
+                            <td class="px-6 py-4">
+                                @if ($item->subcategory == null)
+                                    {{ 'Tidak ada subcategory' }}
+                                @else
+                                    {{ $item->subcategory->title }}
+                                @endif
+                            </td>
+                            <td class="px-6 py-4 truncate">
+                                {{ $item->alasan }}
+                            </td>
+                            <td class="px-6 py-4">
+                                {{ $item->durasi_cuti }}
+                            </td>
+                            <td class="px-6 py-4">
+                                {{ $item->from }}
+                            </td>
+                            <td class="px-6 py-4">
+                                {{ $item->to }}
+                            </td>
+                            <td class="px-6 py-4">
+                                @if ($item->status == 'pending')
+                                    <span
+                                        class="px-2 py-1 font-semibold leading-tight text-yellow-700 bg-yellow-100 rounded-sm dark:bg-yellow-700 dark:text-yellow-100">
+                                        Pending
+                                    </span>
+                                @elseif($item->status == 'approved')
+                                    <span
+                                        class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-sm dark:bg-green-700 dark:text-green-100">
+                                        Approved
+                                    </span>
+                                @else
+                                    <span
+                                        class="px-2 py-1 font-semibold leading-tight text-red-700 bg-red-100 rounded-sm dark:bg-red-700 dark:text-red-100">
+                                        Rejected
+                                    </span>
+                                @endif
+                            </td>
+                            <td class="px-6 py-4">
+                                @if ($item->status == 'pending')
+                                    <a href="#"
+                                        class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                                @else
+                                    <a href="#"
+                                        class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Print</a>
+                                @endif
+                            </td>
+                        </tr>
+
                     @empty
-                    <tr>
-                        <td colspan="7">
-                            <center>Tidak Ada Data</center>
-                        </td>
-                    </tr>
+                        <tr>
+                            <td colspan="7">
+                                <center>Tidak Ada Data</center>
+                            </td>
+                        </tr>
                     @endforelse
                 </tbody>
             </table>

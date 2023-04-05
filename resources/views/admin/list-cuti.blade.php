@@ -9,10 +9,16 @@
 
     @vite('resources/css/app.css')
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.4/flowbite.min.css" rel="stylesheet" />
+    @livewireStyles
 </head>
 
 <body>
-    <div class="container p-9">
+
+    <livewire:layout.navbar />
+
+    <livewire:layout.sidebar />
+
+    <div class="p-6 sm:ml-64 mt-14">
         <div class="flex items-center justify-between pb-4">
             <div>
                 <button id="dropdownRadioButton" data-dropdown-toggle="dropdownRadio"
@@ -166,7 +172,7 @@
                                     {{ $item->subcategory->title }}
                                 @endif
                             </td>
-                            <td class="px-6 py-4">
+                            <td class="px-6 py-4 truncate">
                                 {{ $item->alasan }}
                             </td>
                             <td class="px-6 py-4">
@@ -180,15 +186,18 @@
                             </td>
                             <td class="px-6 py-4">
                                 @if ($item->status == 'pending')
-                                    <p class="focus:outline-none text-white text-center bg-yellow-400 hover:bg-yellow-700 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:focus:ring-yellow-900">
+                                    <p
+                                        class="focus:outline-none text-white text-center bg-yellow-400 hover:bg-yellow-700 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-3 py-1.5 mr-2 mb-2 dark:focus:ring-yellow-900">
                                         {{ $item->status }}
                                     </p>
                                 @elseif($item->status == 'approved')
-                                    <p class="focus:outline-none text-white text-center bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:focus:ring-green-900">
+                                    <p
+                                        class="focus:outline-none text-white text-center bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-3 py-1.5 mr-2 mb-2 dark:focus:ring-green-900">
                                         {{ $item->status }}
                                     </p>
                                 @elseif($item->status == 'disapproved')
-                                    <p class="focus:outline-none text-white text-center bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:focus:ring-red-900">
+                                    <p
+                                        class="focus:outline-none text-white text-center bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-3 py-1.5 mr-2 mb-2 dark:focus:ring-red-900">
                                         {{ $item->status }}
                                     </p>
                                 @endif
@@ -197,17 +206,24 @@
                                 @if ($item->status == 'pending')
                                     <form action="{{ route('leave-requests.approve', $item->id) }}" method="POST">
                                         @csrf
-                                        <button type="submit" class="w-full text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800">Approve</button>
+                                        <button type="submit"
+                                            class="w-full text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-3 py-1.5 text-center mr-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800">Approve</button>
                                     </form>
-                                    <form action="{{ route('leave-requests.disapprove', $item->id) }}" method="POST">
+                                    <form action="{{ route('leave-requests.disapprove', $item->id) }}"
+                                        method="POST">
                                         @csrf
-                                        <button type="submit" class="w-full text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900">Disapprove</button>
+                                        <button type="submit"
+                                            class="w-full text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-3 py-1.5 text-center mr-2 mb-2 dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900">Disapprove</button>
                                     </form>
                                 @else
-                                    <a href="#"
-                                        class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                                    @if ($item->status == 'pending')
+                                        <a href="#"
+                                            class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                                    @else
+                                        <a href="#"
+                                            class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Print</a>
+                                    @endif
                                 @endif
-
                             </td>
                         </tr>
 
@@ -226,6 +242,7 @@
 
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.4/flowbite.min.js"></script>
+    @livewireScripts
 </body>
 
 </html>

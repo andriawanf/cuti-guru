@@ -1,14 +1,15 @@
 <?php
 
-use App\Http\Controllers\admin\CutiListController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CutiController;
-use App\Http\Controllers\CutiTahunanController;
-use App\Http\Controllers\CutiLainnyaController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\CutiLainnyaController;
+use App\Http\Controllers\CutiTahunanController;
+use App\Http\Controllers\admin\CutiListController;
+use App\Http\Controllers\admin\ListUserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,6 +45,7 @@ Route::get('/admin/list-cuti', [CutiListController::class, 'index'])->name('admi
 Route::post('/leave-requests/{request}/approve', [CutiListController::class, 'approve'])->name('leave-requests.approve');
 Route::post('/leave-requests/{request}/disapprove', [CutiListController::class, 'disapprove'])->name('leave-requests.disapprove');
 
+Route::get('/admin/list-user', [ListUserController::class, 'listUser'])->name('admin.list-user');
 
 Route::get('/logout', function () {
     Auth::logout();
