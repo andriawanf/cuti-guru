@@ -9,10 +9,16 @@
 
     @vite('resources/css/app.css')
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.4/flowbite.min.css" rel="stylesheet" />
+    @livewireStyles
 </head>
 
 <body>
-    <div class="container p-9">
+
+    <livewire:layout.navbar />
+
+    <livewire:layout.sidebar />
+
+    <div class="p-6 sm:ml-64 mt-14">
         <div class="flex items-center justify-between pb-4">
             <div>
                 <button id="dropdownRadioButton" data-dropdown-toggle="dropdownRadio"
@@ -160,7 +166,7 @@
                                 {{ $item->subcategory->title }}
                             @endif
                         </td>
-                        <td class="px-6 py-4">
+                        <td class="px-6 py-4 truncate">
                             {{ $item->alasan }}
                         </td>
                         <td class="px-6 py-4">
@@ -208,6 +214,7 @@
 
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.4/flowbite.min.js"></script>
+    @livewireScripts
 </body>
 
 </html>
