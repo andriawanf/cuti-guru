@@ -23,9 +23,8 @@
         <div class="relative overflow-x-auto sm:rounded-lg">
             <div class="flex items-center justify-between pb-4 bg-white dark:bg-gray-900">
                 <div>
-                    <button
-                        class="inline-flex items-center text-white bg-green-700 focus:outline-none hover:bg-green-800 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-3 py-1.5"
-                        type="button">
+                    <a class="inline-flex items-center text-white bg-green-700 focus:outline-none hover:bg-green-800 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-3 py-1.5"
+                        href="{{ route('admin.add-user') }}">
                         <span class="sr-only">Action button</span>
                         Tambah User
                         <svg class="w-3 h-3 ml-2" aria-hidden="true" fill="none" stroke="currentColor"
@@ -33,7 +32,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7">
                             </path>
                         </svg>
-                    </button>
+                    </a>
                 </div>
                 {{-- Search --}}
                 <label for="table-search" class="sr-only">Search</label>
@@ -55,12 +54,8 @@
             <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 ">
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 shadow-md dark:bg-gray-700 dark:text-gray-400">
                     <tr>
-                        <th scope="col" class="p-4">
-                            <div class="flex items-center">
-                                <input id="checkbox-all-search" type="checkbox"
-                                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                <label for="checkbox-all-search" class="sr-only">checkbox</label>
-                            </div>
+                        <th scope="col" class="px-6 py-3">
+                            No
                         </th>
                         <th scope="col" class="px-6 py-3">
                             Nama
@@ -85,9 +80,9 @@
                             class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                             <td class="w-4 p-4">
                                 <div class="flex items-center">
-                                    <input id="checkbox-table-search-1" type="checkbox"
-                                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                    <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
+                                    <div>
+                                        <p class="font-semibold text-center">{{ $loop->iteration }}</p>
+                                    </div>
                                 </div>
                             </td>
                             <th scope="row"
@@ -111,7 +106,7 @@
                             <td class="w-full py-4 flex flex-row space-x-2">
                                 <a href="#"
                                     class="text-white bg-blue-700 px-3 py-1.5 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm hover:underline hover:bg-blue-800">Ubah</a>
-                                <a href="#"
+                                <a href="{{ route('admin.delete-user', ['id' => $user->id ]) }}"
                                     class="text-white bg-red-700 px-3 py-1.5 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm hover:underline hover:bg-red-800">Hapus</a>
                             </td>
                         </tr>

@@ -10,7 +10,7 @@
     @vite('resources/css/app.css')
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.4/flowbite.min.css" rel="stylesheet" />
     @livewireStyles
-    
+
 </head>
 
 <body>
@@ -36,8 +36,12 @@
                 <div
                     class="flex flex-col space-y-2 items-center justify-center h-24 rounded bg-gray-50 dark:bg-gray-800">
                     <h1 class="font-medium text-2xl">Riwayat Pengajuan</h1>
-                    <p class="text-2xl font-medium text-black counter" data-val="{{ Auth::user()->cuti->count() }}">
-                        0</p>
+                    @if (Auth::user()->cuti->count() == 0)
+                        <span class="text-2xl font-medium text-black">0</span>
+                    @else
+                        <p class="text-2xl font-medium text-black counter" data-val="{{ Auth::user()->cuti->count() }}">
+                            0</p>
+                    @endif
                 </div>
             </div>
             <div class="flex items-center justify-center h-56 mb-4 rounded bg-gray-50 dark:bg-gray-800">

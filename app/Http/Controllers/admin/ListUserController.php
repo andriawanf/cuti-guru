@@ -5,6 +5,7 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class ListUserController extends Controller
 {
@@ -14,5 +15,86 @@ class ListUserController extends Controller
         return view('admin.list-user', [
             'user' => $user,
         ]);
+    }
+
+    public function addUser()
+    {
+        return view('admin.add-user');
+    }
+
+    public function storeUser(Request $request){
+        $rules = [
+            'name' => 'required',
+            'nip' => 'required',
+            'pangkat' => 'required',
+            'jabatan' => 'required',
+            'satuan_organisasi' => 'required',
+            'saldo_cuti' => 'required',
+            'email' => 'required',
+            'password' => 'required',
+            'level' => 'required',
+            'foto' => 'required',
+        ];
+        $message = [
+            'name.required' => 'Nama tidak boleh kosong',
+            'nip.required' => 'NIP tidak boleh kosong',
+            'pangkat.required' => 'Pangkat tidak boleh kosong',
+            'jabatan.required' => 'Jabatan tidak boleh kosong',
+            'satuan_organisasi.required' => 'Satuan Organisasi tidak boleh kosong',
+            'saldo_cuti.required' => 'Saldo Cuti tidak boleh kosong',
+            'email.required' => 'Email tidak boleh kosong',
+            'password.required' => 'Password tidak boleh kosong',
+            'level.required' => 'Level tidak boleh kosong',
+            'foto.required' => 'Foto tidak boleh kosong',
+        ];
+        $validator = Validator::make(request()->all(), $rules, $message);
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput(request()->all());
+        }
+        // insert data user
+        User::create([
+            'name' => $request->name,
+            'nip' => $request->nip,
+            'pangkat' => $request->pangkat,
+            'jabatan' => $request->jabatan,
+            'satuan_organisasi' => $request->satuan_organisasi,
+            'saldo_cuti' => $request->saldo_cuti,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+            'level' => $request->level,
+            'foto' => $request->foto,
+        ]);
+        return redirect()->route('admin.list-user')->with('success', 'Data berhasil ditambahkan');
+    }
+
+    public function editUser($id)
+    {
+        $user = User::find($id);
+        return view('admin.edit-user', [
+            'user' => $user,
+        ]);
+    }
+
+    public function updateUser($id){
+        // update data user
+        $user = User::find($id);
+        $user->name = request('name');
+        $user->nip = request('nip');
+        $user->pangkat = request('pangkat');
+        $user->jabatan = request('jabatan');
+        $user->satuan_organisasi = request('satuan_organisasi');
+        $user->saldo_cuti = request('saldo_cuti');
+        $user->email = request('email');
+        $user->password = bcrypt(request('password'));
+        $user->level = request('level');
+        $user->foto = request('foto');
+        $user->save();
+        return redirect()->route('admin.list-user');
+    }
+
+    public function deleteUser($id){
+        $user = User::find($id);
+        $user->delete();
+        return redirect()->route('admin.list-user');
     }
 }
