@@ -33,7 +33,7 @@ class ListUserController extends Controller
             'email' => 'required',
             'password' => 'required',
             'level' => 'required',
-            'foto' => 'required',
+            'foto' => 'required|image',
         ];
         $message = [
             'name.required' => 'Nama tidak boleh kosong',
@@ -52,18 +52,24 @@ class ListUserController extends Controller
             return redirect()->back()->withErrors($validator)->withInput(request()->all());
         }
         // insert data user
-        User::create([
-            'name' => $request->name,
-            'nip' => $request->nip,
-            'pangkat' => $request->pangkat,
-            'jabatan' => $request->jabatan,
-            'satuan_organisasi' => $request->satuan_organisasi,
-            'saldo_cuti' => $request->saldo_cuti,
-            'email' => $request->email,
-            'password' => bcrypt($request->password),
-            'level' => $request->level,
-            'foto' => $request->foto,
-        ]);
+        $user = new User;
+        $user->name = request('name');
+        $user->nip = request('nip');
+        $user->pangkat = request('pangkat');
+        $user->jabatan = request('jabatan');
+        $user->satuan_organisasi = request('satuan_organisasi');
+        $user->saldo_cuti = request('saldo_cuti');
+        $user->email = request('email');
+        $user->password = bcrypt(request('password'));
+        $user->level = request('level');
+        if ($request->hasFile('foto')) {
+            $file = $request->file('foto');
+            $nama_file = time()."_".$file->getClientOriginalName();
+            $file->move(public_path('foto_user'),$nama_file);
+            $user->foto = $nama_file;
+        }
+        $user->save();
+        
         return redirect()->route('admin.list-user')->with('success', 'Data berhasil ditambahkan');
     }
 
@@ -75,7 +81,7 @@ class ListUserController extends Controller
         ]);
     }
 
-    public function updateUser($id){
+    public function updateUser(Request $request ,$id){
         // update data user
         $user = User::find($id);
         $user->name = request('name');
@@ -87,8 +93,16 @@ class ListUserController extends Controller
         $user->email = request('email');
         $user->password = bcrypt(request('password'));
         $user->level = request('level');
-        $user->foto = request('foto');
+        if ($request->hasFile('foto')) {
+            $file = $request->file('foto');
+            $nama_file = time()."_".$file->getClientOriginalName();
+            $file->move(public_path('foto_user'),$nama_file);
+            $user->foto = $nama_file;
+        }
+        
         $user->save();
+        $request->session()->put('foto', $user->foto);
+
         return redirect()->route('admin.list-user');
     }
 

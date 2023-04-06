@@ -110,10 +110,13 @@
                 <label for="avatar" class="col-md-4 col-form-label text-md-end">{{ __('foto') }}</label>
 
                 <div class="col-md-6">
-                    <input id="foto" type="file" class="form-control @error('foto') is-invalid @enderror"
+                    <div class="mb-4">
+                        <img src="/foto_user/{{ Auth::user()->foto }}" style="width:80px;margin-top: 10px;">
+                    </div>
+                    <input id="foto" type="file"
+                        class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 @error('foto') is-invalid @enderror"
                         name="foto" value="{{ old('foto') }}" required autocomplete="foto">
 
-                    <img src="/foto_user/{{ Auth::user()->foto }}" style="width:80px;margin-top: 10px;">
 
                     @error('avatar')
                         <span class="invalid-feedback" role="alert">
