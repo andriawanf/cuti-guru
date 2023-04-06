@@ -111,7 +111,7 @@
             <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                 <caption
                     class="p-5 text-lg font-semibold text-left text-gray-900 bg-white dark:text-white dark:bg-gray-800">
-                    Riwayat Pengajuan Cuti
+                    Riwayat Pengajuan Cuti Guru
                     <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Riwayat pengajuan cuti kamu
                         selama ini.</p>
                 </caption>
@@ -229,8 +229,8 @@
 
                     @empty
                         <tr>
-                            <td colspan="7">
-                                <center>Tidak Ada Data</center>
+                            <td colspan="8">
+                                <center class="p-6">Tidak Ada Data Cuti</center>
                             </td>
                         </tr>
                     @endforelse
@@ -448,8 +448,8 @@
 
                     @empty
                         <tr>
-                            <td colspan="7">
-                                <center>Tidak Ada Data</center>
+                            <td colspan="8">
+                                <center class="p-6">Tidak Ada Data Cuti</center>
                             </td>
                         </tr>
                     @endforelse

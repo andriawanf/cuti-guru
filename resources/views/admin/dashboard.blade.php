@@ -32,7 +32,7 @@
                 <div
                     class="flex flex-col space-y-2 items-center justify-center h-24 rounded bg-gray-50 dark:bg-gray-800">
                     <h1 class="font-medium text-2xl">Total Guru</h1>
-                    <p class="text-2xl font-medium text-black counter" data-val="{{ App\Models\User::where('level', 'guru')->count() }}">
+                    <p class="text-2xl font-medium text-black counter" data-val="{{ App\Models\User::where('jabatan', 'guru')->count() }}">
                         0</p>
                 </div>
             </div>

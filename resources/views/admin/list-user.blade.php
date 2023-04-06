@@ -104,7 +104,7 @@
                                 {{ $user->saldo_cuti  }}
                             </td>
                             <td class="w-full py-4 flex flex-row space-x-2">
-                                <a href="#"
+                                <a href="{{ route('admin.edit-user', ['id' => $user->id ]) }} }}"
                                     class="text-white bg-blue-700 px-3 py-1.5 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm hover:underline hover:bg-blue-800">Ubah</a>
                                 <a href="{{ route('admin.delete-user', ['id' => $user->id ]) }}"
                                     class="text-white bg-red-700 px-3 py-1.5 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm hover:underline hover:bg-red-800">Hapus</a>

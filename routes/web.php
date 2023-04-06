@@ -48,8 +48,8 @@ Route::post('/leave-requests/{request}/disapprove', [CutiListController::class, 
 Route::get('/admin/list-user', [ListUserController::class, 'listUser'])->name('admin.list-user');
 Route::get('/admin/add-user', [ListUserController::class, 'addUser'])->name('admin.add-user');
 Route::post('/admin/add-user', [ListUserController::class, 'storeUser'])->name('admin.store-user');
-Route::get('/admin/list-user/{id}/edit', [ListUserController::class, 'editUser'])->name('admin.edit-user');
-Route::post('/admin/list-user/{id}/edit', [ListUserController::class, 'updateUser'])->name('admin.update-user');
+Route::get('/admin/edit-user/{id}/', [ListUserController::class, 'editUser'])->name('admin.edit-user');
+Route::post('/admin/edit-user/{id}/', [ListUserController::class, 'updateUser'])->name('admin.update-user');
 Route::get('/admin/list-user/{id}/delete', [ListUserController::class, 'deleteUser'])->name('admin.delete-user');
 
 
