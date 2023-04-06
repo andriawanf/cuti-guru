@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CutiController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\CutiLainnyaController;
@@ -51,6 +52,9 @@ Route::post('/admin/add-user', [ListUserController::class, 'storeUser'])->name('
 Route::get('/admin/edit-user/{id}/', [ListUserController::class, 'editUser'])->name('admin.edit-user');
 Route::post('/admin/edit-user/{id}/', [ListUserController::class, 'updateUser'])->name('admin.update-user');
 Route::get('/admin/list-user/{id}/delete', [ListUserController::class, 'deleteUser'])->name('admin.delete-user');
+
+Route::get('/settings', [UserController::class, 'index'])->name('settings');
+Route::post('/settings', [UserController::class, 'pengaturan'])->name('settings.update');
 
 
 Route::get('/logout', function () {
