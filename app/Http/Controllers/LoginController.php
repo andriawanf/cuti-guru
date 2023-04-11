@@ -27,7 +27,7 @@ class LoginController extends Controller
 
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password], $request->remember)) {
             $request->session()->regenerate();
-            if (Auth::user()->level == 'admin'){
+            if (Auth::user()->level == 'admin' || Auth::user()->level == 'kepala sekolah'){
                 return redirect()->route('dashboard');
             } else {
                 return redirect()->route('home');

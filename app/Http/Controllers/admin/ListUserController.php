@@ -5,16 +5,24 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class ListUserController extends Controller
 {
     public function listUser()
     {
-        $user = User::all();
-        return view('admin.list-user', [
-            'user' => $user,
-        ]);
+        if (Auth::user()->level == 'kepala sekolah'){
+            $user = User::all();
+            return view('admin.list-user', [
+                'user' => $user,
+            ]);
+        } elseif (Auth::user()->level == 'admin') {
+            $user = User::where('level', '=', 'Guru')->get();
+            return view('admin.list-user', [
+                'user' => $user,
+            ]);
+        }
     }
 
     public function addUser()
