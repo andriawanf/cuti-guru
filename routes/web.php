@@ -56,6 +56,9 @@ Route::get('/admin/list-user/{id}/delete', [ListUserController::class, 'deleteUs
 Route::get('/settings', [UserController::class, 'index'])->name('settings');
 Route::post('/settings', [UserController::class, 'pengaturan'])->name('settings.update');
 
+Route::get('guru/history/pdf', [CutiController::class, 'createPDF'])->name('guru.history.pdf');
+Route::get('/download-pdf/{id}', [CutiTahunanController::class, 'downloadPDFCuti'])->name('download-pdf');
+
 
 Route::get('/logout', function () {
     Auth::logout();

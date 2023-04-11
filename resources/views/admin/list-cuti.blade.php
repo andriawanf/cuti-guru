@@ -111,9 +111,9 @@
             <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                 <caption
                     class="p-5 text-lg font-semibold text-left text-gray-900 bg-white dark:text-white dark:bg-gray-800">
-                    Riwayat Pengajuan Cuti Guru
-                    <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Riwayat pengajuan cuti kamu
-                        selama ini.</p>
+                    Riwayat Pending Cuti Guru
+                    <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Riwayat pengajuan cuti guru
+                        yang masih pending.</p>
                 </caption>
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
@@ -168,7 +168,7 @@
                                     {{ $item->subcategory->title }}
                                 @endif
                             </td>
-                            <td class="px-6 py-4 truncate">
+                            <td class="px-6 py-4 line-clamp-1">
                                 {{ $item->alasan }}
                             </td>
                             <td class="px-6 py-4">
@@ -334,8 +334,8 @@
             <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                 <caption
                     class="p-5 text-lg font-semibold text-left text-gray-900 bg-white dark:text-white dark:bg-gray-800">
-                    Riwayat Pengajuan Cuti
-                    <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Riwayat pengajuan cuti kamu
+                    Riwayat Pengajuan Cuti Guru
+                    <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Riwayat pengajuan cuti Guru
                         selama ini.</p>
                 </caption>
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -346,6 +346,9 @@
                                     class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                 <label for="checkbox-all-search" class="sr-only">checkbox</label>
                             </div>
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Nama
                         </th>
                         <th scope="col" class="px-6 py-3">
                             Category
@@ -377,8 +380,11 @@
                     @forelse ($cuti as $i => $item)
                         <tr
                             class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                            <td class="w-4 p-4">
+                            <td class="px-6 py-4">
                                 {{ $loop->iteration }}
+                            </td>
+                            <td class="px-6 py-4">
+                                {{ $item->user->name }}
                             </td>
                             <th scope="row"
                                 class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
@@ -391,7 +397,7 @@
                                     {{ $item->subcategory->title }}
                                 @endif
                             </td>
-                            <td class="px-6 py-4 truncate">
+                            <td class="px-6 py-4 line-clamp-1">
                                 {{ $item->alasan }}
                             </td>
                             <td class="px-6 py-4">

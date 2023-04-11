@@ -7,6 +7,7 @@ use App\Models\Category;
 use App\Models\Cuti;
 use App\Models\Subcategory;
 use App\Models\User;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -26,11 +27,12 @@ class CutiController extends Controller
         ]);
     }
 
-    public function addCuti(Request $request){
+    public function addCuti(Request $request)
+    {
         $validate_category = Validator::make($request->all(), [
             'category' => 'required'
         ], ['category.required' => 'Category wajib diisi.']);
-        if($validate_category->fails()){
+        if ($validate_category->fails()) {
             return redirect()->back()->withErrors($validate_category);
         }
         switch ($request->category) {
@@ -52,29 +54,29 @@ class CutiController extends Controller
                     'alasan.max' => 'Alasan maximal diisi dengan :max karakter.',
                 ];
                 $validator = Validator::make($request->all(), $rules, $messages);
-                if($validator->fails()){
+                if ($validator->fails()) {
                     return redirect()->back()->withErrors($validator);
-                }                
+                }
                 $from_count = Cuti::where('from', $request->from)->count();
                 $to_count = Cuti::where('to', $request->to)->count();
-                if($from_count > 5 || $to_count > 5){
+                if ($from_count > 5 || $to_count > 5) {
                     return redirect()->back()->with('error', 'Batas cuti di hari tersebut sudah penuh!');
                 }
                 // $to = \Carbon\Carbon::createFromFormat('Y-m-d', $request->to);
                 // $from = \Carbon\Carbon::createFromFormat('Y-m-d', $request->from);
                 // $diff_in_days = $to->diffInDays($from);
                 $cuti = Cuti::find($request->id);
-                if($request->durasi_cuti <= Auth::user()->saldo_cuti){
+                if ($request->durasi_cuti <= Auth::user()->saldo_cuti) {
                     $cuti_count = Cuti::where([
                         ['status', '=', 'pending'],
                         ['user_id', '=', Auth::user()->id]
                     ])->count();
-                    if($cuti_count != 0){
+                    if ($cuti_count != 0) {
                         return redirect()->back()->with('error', 'Masih ada cuti yang pending!');
                     }
                     $user = User::find(Auth::user()->id);
                     // $cuti = Cuti::find($request->id);
-                    if($user->status == 'pending'){
+                    if ($user->status == 'pending') {
                         $user->saldo_cuti = $user->saldo_cuti + $cuti->durasi_cuti;
                         $user->save();
                     }
@@ -91,7 +93,7 @@ class CutiController extends Controller
                     ]);
                     return redirect()->back()->with('success', 'Berhasil membuat permohonan cuti');
                 }
-                return redirect()->back()->with('error', 'Sisa saldo cuti kamu tidak cukup');    
+                return redirect()->back()->with('error', 'Sisa saldo cuti kamu tidak cukup');
                 break;
             case 2:
                 $rules = [
@@ -114,15 +116,15 @@ class CutiController extends Controller
                     'alasan.max' => 'Alasan maximal diisi dengan :max karakter.',
                 ];
                 $validator = Validator::make($request->all(), $rules, $messages);
-                if($validator->fails()){
+                if ($validator->fails()) {
                     return redirect()->back()->withErrors($validator);
-                } 
+                }
                 $from_count = Cuti::where('from', $request->from)->count();
                 $to_count = Cuti::where('to', $request->to)->count();
                 // $to = \Carbon\Carbon::createFromFormat('Y-m-d', $request->to);
                 // $from = \Carbon\Carbon::createFromFormat('Y-m-d', $request->from);
                 // $diff_in_days = $to->diffInDays($from);
-                if($from_count > 5 || $to_count > 5){
+                if ($from_count > 5 || $to_count > 5) {
                     return redirect()->back()->with('error', 'Batas cuti di hari tersebut sudah penuh!');
                 }
                 $path = Storage::putFile(
@@ -131,7 +133,7 @@ class CutiController extends Controller
                 );
                 $user = User::find(Auth::user()->id);
                 $cuti = Cuti::find($request->id);
-                if($user->status == 'pending'){
+                if ($user->status == 'pending') {
                     $user->saldo_cuti = $user->saldo_cuti + $cuti->durasi_cuti;
                     $user->save();
                 }
@@ -151,8 +153,8 @@ class CutiController extends Controller
                 return redirect()->back()->with('success', 'Berhasil membuat permohonan cuti');
                 break;
             default:
-                return redirect()->back()->with('error','Gagal membuat permohonan cuti!');
-            break;
+                return redirect()->back()->with('error', 'Gagal membuat permohonan cuti!');
+                break;
         }
     }
 
@@ -171,5 +173,12 @@ class CutiController extends Controller
         return view('guru.history', [
             'cuti' => $cuti,
         ]);
+    }
+
+    public function createPDF()
+    {
+        $cuti = Cuti::where('user_id', Auth::user()->id)->with(['category', 'subcategory'])->get();
+        $pdf = PDF::loadView('guru.history', ['cuti' => $cuti]);
+        return $pdf->download('riwayat_cuti.pdf');
     }
 }

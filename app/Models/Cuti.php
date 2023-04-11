@@ -18,6 +18,7 @@ class Cuti extends Model
         'file',
         'status',
         'durasi_cuti',
+        'signature',
         'cat_id',
         'sub_id',
         'user_id',
@@ -38,5 +39,10 @@ class Cuti extends Model
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function signature()
+    {
+        return $this->belongsTo(Signature::class, 'sig_id', 'id', 'signature');
     }
 }

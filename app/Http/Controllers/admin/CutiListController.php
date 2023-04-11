@@ -12,7 +12,7 @@ class CutiListController extends Controller
 {
     public function index()
     {
-        $cuti = Cuti::where('user_id', Auth::user()->id)->with(['category', 'subcategory'])->get();
+        $cuti = Cuti::where('status', 'approved')->with(['category', 'subcategory'])->get();
         $cutiGuru = Cuti::where('status', 'pending')->with(['category', 'subcategory'])->get();
         return view('admin.list-cuti', [
             'cuti' => $cuti,
