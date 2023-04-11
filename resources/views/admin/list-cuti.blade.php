@@ -168,7 +168,7 @@
                                     {{ $item->subcategory->title }}
                                 @endif
                             </td>
-                            <td class="px-6 py-4 line-clamp-1">
+                            <td class="px-6 py-4 line-clamp-2 w-64">
                                 {{ $item->alasan }}
                             </td>
                             <td class="px-6 py-4">
@@ -183,7 +183,7 @@
                             <td class="px-6 py-4">
                                 @if ($item->status == 'pending')
                                     <p
-                                        class="focus:outline-none text-white text-center bg-yellow-400 hover:bg-yellow-700 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-3 py-1.5 mr-2 mb-2 dark:focus:ring-yellow-900">
+                                        class="focus:outline-none text-white text-center bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-3 py-1.5 mr-2 mb-2 dark:focus:ring-yellow-900">
                                         {{ $item->status }}
                                     </p>
                                 @elseif($item->status == 'approved')
@@ -196,11 +196,46 @@
                                         class="focus:outline-none text-white text-center bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-3 py-1.5 mr-2 mb-2 dark:focus:ring-red-900">
                                         {{ $item->status }}
                                     </p>
+                                @elseif($item->status == 'admin confirmed')
+                                    <p
+                                        class="focus:outline-none text-white text-center bg-orange-600 hover:bg-orange-700 focus:ring-4 focus:ring-orange-300 font-medium rounded-lg text-sm px-3 py-1.5 mr-2 mb-2 dark:focus:ring-orange-900">
+                                        {{ $item->status }}
+                                    </p>
+                                @elseif($item->status == 'admin deny')
+                                    <p
+                                        class="focus:outline-none text-white text-center bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-3 py-1.5 mr-2 mb-2 dark:focus:ring-red-900">
+                                        {{ $item->status }}
+                                    </p>
                                 @endif
                             </td>
                             @if (Auth::user()->level == 'admin')
                                 <td class="px-6 py-4">
                                     @if ($item->status == 'pending')
+                                        <form action="{{ route('leave-requests.approve', $item->id) }}"
+                                            method="POST">
+                                            @csrf
+                                            <button type="submit"
+                                                class="w-full text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-3 py-1.5 text-center mr-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800">Confirm</button>
+                                        </form>
+                                        <form action="{{ route('leave-requests.disapprove', $item->id) }}"
+                                            method="POST">
+                                            @csrf
+                                            <button type="submit"
+                                                class="w-full text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-3 py-1.5 text-center mr-2 mb-2 dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900">Deny</button>
+                                        </form>
+                                    @else
+                                        @if ($item->status == 'pending')
+                                            <a href="#"
+                                                class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                                        @else
+                                            <a href="#"
+                                                class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Print</a>
+                                        @endif
+                                    @endif
+                                </td>
+                            @elseif (Auth::user()->level == 'kepala sekolah' && $item->status == 'admin confirmed')
+                                <td class="px-6 py-4">
+                                    @if ($item->status == 'admin confirmed')
                                         <form action="{{ route('leave-requests.approve', $item->id) }}"
                                             method="POST">
                                             @csrf
@@ -224,7 +259,6 @@
                                     @endif
                                 </td>
                             @endif
-
                         </tr>
 
                     @empty
@@ -432,7 +466,7 @@
                                     <form action="{{ route('leave-requests.approve', $item->id) }}" method="POST">
                                         @csrf
                                         <button type="submit"
-                                            class="w-full text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-3 py-1.5 text-center mr-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800">Approve</button>
+                                            class="w-full text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-3 py-1.5 text-center mr-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800">Confirmed</button>
                                     </form>
                                     <form action="{{ route('leave-requests.disapprove', $item->id) }}"
                                         method="POST">

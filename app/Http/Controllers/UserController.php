@@ -53,6 +53,8 @@ class UserController extends Controller
         $user->password = Hash::make($request->password);
         $user->save();
 
+        // insert ttd kepala sekolah
+
         // update foto profile user
         $request->session()->put('foto', $user->foto);
         return redirect()->route('settings')->with('success', 'Pengaturan berhasil disimpan');
