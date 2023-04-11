@@ -56,10 +56,10 @@
                             </div>
                         </th>
                         <th scope="col" class="px-6 py-3">
-                            Category
+                            Kategori
                         </th>
                         <th scope="col" class="px-6 py-3">
-                            Subcategory
+                            Sub-Kategori
                         </th>
                         <th scope="col" class="px-6 py-3">
                             Alasan
@@ -75,6 +75,9 @@
                         </th>
                         <th scope="col" class="px-6 py-3">
                             Status
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Action
                         </th>
                     </tr>
                 </thead>
@@ -98,7 +101,7 @@
                                     {{ $item->subcategory->title }}
                                 @endif
                             </td>
-                            <td class="px-6 py-4 truncate">
+                            <td class="px-6 py-4 line-clamp-2 w-64">
                                 {{ $item->alasan }}
                             </td>
                             <td class="px-6 py-4">
@@ -121,15 +124,20 @@
                                         class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-sm dark:bg-green-700 dark:text-green-100">
                                         Approved
                                     </span>
+                                @elseif($item->status == 'admin confirmed')
+                                    <span
+                                        class="px-2 py-1 font-semibold leading-tight text-orange-600 bg-orange-100 rounded-sm dark:bg-orange-600 dark:text-orange-100">
+                                        Confirmed
+                                    </span>
                                 @else
                                     <span
                                         class="px-2 py-1 font-semibold leading-tight text-red-700 bg-red-100 rounded-sm dark:bg-red-700 dark:text-red-100">
-                                        Rejected
+                                        Disapproved
                                     </span>
                                 @endif
                             </td>
                             <td class="px-6 py-4">
-                                @if ($item->status == 'pending')
+                                @if ($item->status == 'pending' || $item->status == 'admin confirmed')
                                     <a href="#"
                                         class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
                                 @else
