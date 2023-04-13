@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Cuti;
 use App\Models\User;
+use App\Notifications\notificationFormSubmitted;
 use Dompdf\Dompdf;
 use Dompdf\Options;
 use Illuminate\Http\Request;
@@ -14,6 +15,10 @@ use PhpOffice\PhpWord\TemplateProcessor;
 
 class CutiTahunanController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     public function index()
     {
         return view('guru.cuti-tahunan');
@@ -92,6 +97,8 @@ class CutiTahunanController extends Controller
                 'signature' => $file,
                 'user_id' => Auth::user()->id
             ]);
+
+            User::find(Auth::user()->id)->notify(new notificationFormSubmitted($user->status, $user->category->title));
             return redirect()->back()->with('success', 'Berhasil membuat permohonan cuti');
         }
         return redirect()->back()->with('error', 'Sisa saldo cuti kamu tidak cukup');
@@ -112,7 +119,7 @@ class CutiTahunanController extends Controller
         $document->setValue('from', $leave->from);
         $document->setValue('to', $leave->to);
         $document->setValue('tanggal', $leave->updated_at);
-        $document->setImageValue('ttd', array( $leave->signature, 'width' => 200, 'height' => 200, 'ratio' => false));
+        $document->setImageValue('ttd', array($leave->signature, 'width' => 200, 'height' => 200, 'ratio' => false));
         // $document->setValue('ttd', $leave->user->ttd);
         $leader = User::where('jabatan', 'Kepala Sekolah')->first();
         $document->setValue('kepala_sekolah', $leader->jabatan);
