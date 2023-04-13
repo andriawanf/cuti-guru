@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\admin;
 
-use App\Http\Controllers\Controller;
 use App\Models\Cuti;
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Notifications\notificationAdminConfirm;
+use App\Notifications\notificationKepsekApproved;
 use Illuminate\Support\Facades\Auth;
 
 class CutiListController extends Controller
@@ -28,11 +30,17 @@ class CutiListController extends Controller
             $leave->status = 'admin confirmed';
             $leave->save();
 
+            $user = $leave->user->jabatan === 'guru' ? User::find($leave->user_id) : User::find($leave->user_id);
+            $user->notify(new notificationAdminConfirm($leave->status));
             return redirect()->back()->with('success', 'Leave request approved.');
         } elseif (Auth::user()->level === 'kepala sekolah') {
             $leave = Cuti::find($id);
             $leave->status = 'approved';
             $leave->save();
+
+            $user = $leave->user->jabatan === 'guru' ? User::find($leave->user_id) : User::find($leave->user_id);
+            $user->notify(new notificationKepsekApproved($leave->status));
+            
             if ($leave->status === 'approved' && $leave->sub_id != '3') {
                 $user = User::find($leave->user_id);
                 $user->saldo_cuti = $user->saldo_cuti - $leave->durasi_cuti;
