@@ -7,6 +7,7 @@ use App\Models\Category;
 use App\Models\Cuti;
 use App\Models\Subcategory;
 use App\Models\User;
+use App\Notifications\notificationFormSubmitted;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -92,6 +93,9 @@ class CutiLainnyaController extends Controller
             'durasi_cuti' => $request->durasi_cuti,
             'user_id' => Auth::user()->id
         ]);
+
+        // notifikasi
+        User::find(Auth::user()->id)->notify(new notificationFormSubmitted($cuti->status, $cuti->subcategory->title));
         return redirect()->back()->with('success', 'Berhasil membuat permohonan cuti');
     }
 
