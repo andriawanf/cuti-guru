@@ -59,6 +59,8 @@ Route::post('/settings', [UserController::class, 'pengaturan'])->name('settings.
 Route::get('guru/history/pdf', [CutiController::class, 'createPDF'])->name('guru.history.pdf');
 Route::get('/download-pdf/{id}', [CutiTahunanController::class, 'downloadPDFCuti'])->name('download-pdf');
 
+// mark as read
+Route::get('/markAsRead', [CutiTahunanController::class, 'markAsRead'])->name('markAsRead');
 
 Route::get('/logout', function () {
     Auth::logout();

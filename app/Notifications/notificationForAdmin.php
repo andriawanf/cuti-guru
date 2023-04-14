@@ -7,33 +7,25 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class notificationKepsekApproved extends Notification
+class notificationForAdmin extends Notification
 {
     use Queueable;
+    public $name;
     public $leave;
-
     /**
      * Create a new notification instance.
      */
-    public function __construct($leave)
+    public function __construct($name, $leave)
     {
-        $this->leave = $leave;
+        $this->leave = $name;
+        $this->name = $leave;
     }
 
-
-    /**
-     * Get the notification's delivery channels.
-     *
-     * @return array<int, string>
-     */
     public function via(object $notifiable): array
     {
         return ['database'];
     }
 
-    /**
-     * Get the mail representation of the notification.
-     */
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
@@ -50,7 +42,7 @@ class notificationKepsekApproved extends Notification
     public function toArray(object $notifiable): array
     {
         return [
-            'data' => 'Pengajuan cuti kamu telah di' . $this->leave . ' oleh Kepala Sekolah',
+            'data' => 'Kamu mendapatkan ' .$this->name. ' baru dari ' . $this->leave,
             'link' => 'http://localhost:8000',
         ];
     }

@@ -34,7 +34,8 @@
                                     </path>
                                 </svg>
                                 <div class="relative flex">
-                                    <div class="relative inline-flex w-3 h-3 text-red-500 border-2 border-white rounded-full -top-4 right-3">
+                                    <div
+                                        class="relative inline-flex w-3 h-3 text-red-500 border-2 border-white rounded-full -top-4 right-3">
                                         {{ auth()->user()->unreadNotifications->count() }}
                                     </div>
                                 </div>
@@ -48,15 +49,18 @@
                                     Notifications
                                 </div>
                                 <div class="divide-y divide-gray-100 dark:divide-gray-700">
+
                                     @foreach (Auth::user()->unreadNotifications as $notification)
-                                        <a href="#" class="flex px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-700">
+                                        <a href="#"
+                                            class="flex px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-700">
                                             <div class="flex-shrink-0">
-                                                <img class="rounded-full w-11 h-11"
-                                                    src="{{ Auth::user()->foto }}" alt="Jese image">
+                                                {{-- <img class="rounded-full w-11 h-11"
+                                                src="{{ Auth::user()->foto }}" alt="Jese image"> --}}
                                                 <div
                                                     class="absolute flex items-center justify-center w-5 h-5 ml-6 -mt-5 bg-blue-600 border border-white rounded-full dark:border-gray-800">
-                                                    <svg class="w-3 h-3 text-white" aria-hidden="true" fill="currentColor"
-                                                        viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                                    <svg class="w-3 h-3 text-white" aria-hidden="true"
+                                                        fill="currentColor" viewBox="0 0 20 20"
+                                                        xmlns="http://www.w3.org/2000/svg">
                                                         <path
                                                             d="M8.707 7.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l2-2a1 1 0 00-1.414-1.414L11 7.586V3a1 1 0 10-2 0v4.586l-.293-.293z">
                                                         </path>
@@ -73,8 +77,7 @@
                                             </div>
                                         </a>
                                     @endforeach ()
-
-                                    @foreach (Auth::user()->readNotifications as $notification)
+                                    {{-- @foreach (Auth::user()->readNotifications as $notification)
                                         <a href="#" class="flex px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-700">
                                             <div class="flex-shrink-0">
                                                 <img class="rounded-full w-11 h-11"
@@ -94,26 +97,28 @@
                                             </div>
                                             <div class="w-full pl-3">
                                                 <div class="text-gray-500 text-sm mb-1.5 dark:text-gray-400">
-                                                    {{ $notification->user['status'] }}
+                                                    {{ $notification->data['data'] }}
                                                 </div>
                                             </div>
                                         </a>
-                                    @endforeach
+                                    @endforeach --}}
                                 </div>
-                                <a href="#"
-                                    class="block py-2 text-sm font-medium text-center text-gray-900 rounded-b-lg bg-gray-50 hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-700 dark:text-white">
-                                    <div class="inline-flex items-center ">
-                                        <svg class="w-4 h-4 mr-2 text-gray-500 dark:text-gray-400" aria-hidden="true"
-                                            fill="currentColor" viewBox="0 0 20 20"
-                                            xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M10 12a2 2 0 100-4 2 2 0 000 4z"></path>
-                                            <path fill-rule="evenodd"
-                                                d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z"
-                                                clip-rule="evenodd"></path>
-                                        </svg>
-                                        View all
-                                    </div>
-                                </a>
+                                @if (Auth::user()->unreadNotifications)
+                                    <a href="{{ route('markAsRead') }}"
+                                        class="block py-2 text-sm font-medium text-center text-gray-900 rounded-b-lg bg-gray-50 hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-700 dark:text-white">
+                                        <div class="inline-flex items-center ">
+                                            <svg class="w-4 h-4 mr-2 text-gray-500 dark:text-gray-400"
+                                                aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M10 12a2 2 0 100-4 2 2 0 000 4z"></path>
+                                                <path fill-rule="evenodd"
+                                                    d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z"
+                                                    clip-rule="evenodd"></path>
+                                            </svg>
+                                            Mark as read
+                                        </div>
+                                    </a>
+                                @endif
                             </div>
 
                         </div>
@@ -123,8 +128,8 @@
                                 class="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
                                 aria-expanded="false" data-dropdown-toggle="dropdown-user">
                                 <span class="sr-only">Open user menu</span>
-                                <img class="w-8 h-8 rounded-full object-cover"
-                                    src="/foto_user/{{ Auth::user()->foto }}" alt="user photo">
+                                <img class="w-8 h-8 rounded-full object-cover" src="/foto_user/{{ Auth::user()->foto }}"
+                                    alt="user photo">
                             </button>
                         </div>
                         <div class="z-50 hidden my-4 mr-4 p-3 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600"
@@ -133,8 +138,7 @@
                                 <p class="text-sm text-gray-900 dark:text-white" role="none">
                                     {{ Auth::user()->name }}
                                 </p>
-                                <p class="text-sm font-medium text-gray-900 truncate dark:text-gray-300"
-                                    role="none">
+                                <p class="text-sm font-medium text-gray-900 truncate dark:text-gray-300" role="none">
                                     {{ Auth::user()->email }}
                                 </p>
                             </div>

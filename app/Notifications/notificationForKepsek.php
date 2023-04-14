@@ -7,19 +7,19 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class notificationKepsekApproved extends Notification
+class notificationForKepsek extends Notification
 {
     use Queueable;
-    public $leave;
+    public $name;
 
     /**
      * Create a new notification instance.
      */
-    public function __construct($leave)
+    public function __construct($name)
     {
-        $this->leave = $leave;
-    }
 
+        $this->name = $name;
+    }
 
     /**
      * Get the notification's delivery channels.
@@ -50,7 +50,7 @@ class notificationKepsekApproved extends Notification
     public function toArray(object $notifiable): array
     {
         return [
-            'data' => 'Pengajuan cuti kamu telah di' . $this->leave . ' oleh Kepala Sekolah',
+            'data' => 'Kamu mendapatkan konfirmasi dari admin atas cuti ' . $this->name,
             'link' => 'http://localhost:8000',
         ];
     }

@@ -6,9 +6,10 @@ use App\Models\Cuti;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use App\Notifications\notificationForKepsek;
 use App\Notifications\notificationAdminConfirm;
 use App\Notifications\notificationKepsekApproved;
-use Illuminate\Support\Facades\Auth;
 
 class CutiListController extends Controller
 {
@@ -32,6 +33,10 @@ class CutiListController extends Controller
 
             $user = $leave->user->jabatan === 'guru' ? User::find($leave->user_id) : User::find($leave->user_id);
             $user->notify(new notificationAdminConfirm($leave->status));
+
+            // notif to kepsek
+            $kepsek = User::where('level', 'kepala sekolah')->first();
+            $kepsek->notify(new notificationForKepsek($user->name));
             return redirect()->back()->with('success', 'Leave request approved.');
         } elseif (Auth::user()->level === 'kepala sekolah') {
             $leave = Cuti::find($id);

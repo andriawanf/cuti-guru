@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use App\Models\Category;
 use App\Models\Cuti;
-use App\Models\Subcategory;
 use App\Models\User;
-use App\Notifications\notificationFormSubmitted;
+use App\Models\Category;
+use App\Models\Subcategory;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use App\Notifications\notificationForAdmin;
+use App\Notifications\notificationFormSubmitted;
 
 class CutiLainnyaController extends Controller
 {
@@ -94,8 +95,13 @@ class CutiLainnyaController extends Controller
             'user_id' => Auth::user()->id
         ]);
 
-        // notifikasi
+        // notification to users
         User::find(Auth::user()->id)->notify(new notificationFormSubmitted($cuti->status, $cuti->subcategory->title));
+
+        // notif to admin
+        $admin = User::where('level', 'admin')->first();
+        $admin->notify(new notificationForAdmin($cuti->user->name, $cuti->subcategory->title));
+        
         return redirect()->back()->with('success', 'Berhasil membuat permohonan cuti');
     }
 

@@ -50,22 +50,22 @@ class notificationFormSubmitted extends Notification
     public function toArray($notifiable): array
     {
         return [
-            'data' => ' Your deposit of '. $this->user.' was successful',
+            'data' => $this->jenis_cuti. ' sedang dalam proses ' . $this->user,
             'link' => 'http://localhost:8000',
         ];
     }
 
-    /**
-     * Get the array representation of the notification.
-     *
-     * @return array<string, mixed>
-     */
+    // /**
+    //  * Get the array representation of the notification.
+    //  *
+    //  * @return array<string, mixed>
+    //  */
 
-    public function toDatabase(object $notifiable): array
-    {
-        return [
-            'data' => $this->jenis_cuti. ' anda sedang dalam proses ' . $this->user,
-            'link' => 'http://localhost:8000',
-        ];
-    }
+    // public function toDatabase(object $notifiable): array
+    // {
+    //     return [
+    //         'data' => $this->jenis_cuti. ' anda sedang dalam proses ' . $this->user,
+    //         'link' => 'http://localhost:8000',
+    //     ];
+    // }
 }

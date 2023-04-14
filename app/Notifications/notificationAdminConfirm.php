@@ -48,7 +48,7 @@ class notificationAdminConfirm extends Notification
     public function toArray(object $notifiable): array
     {
         return [
-            'data' => 'Your leave request has been ' . $this->leave . ' by admin',
+            'data' => 'Pengajuan cuti kamu telah dikonfirmasi oleh admin',
             'link' => 'http://localhost:8000',
         ];
     }

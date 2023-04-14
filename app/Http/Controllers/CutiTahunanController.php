@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Cuti;
 use App\Models\User;
+use App\Notifications\notificationAdminConfirm;
+use App\Notifications\notificationForAdmin;
+use App\Notifications\notificationForKepsek;
 use App\Notifications\notificationFormSubmitted;
 use Dompdf\Dompdf;
 use Dompdf\Options;
@@ -99,6 +102,10 @@ class CutiTahunanController extends Controller
             ]);
 
             User::find(Auth::user()->id)->notify(new notificationFormSubmitted($user->status, $user->category->title));
+            // notif to admin
+            $admin = User::where('level', 'admin')->first();
+            $admin->notify(new notificationForAdmin($user->user->name, $user->category->title));
+
             return redirect()->back()->with('success', 'Berhasil membuat permohonan cuti');
         }
         return redirect()->back()->with('error', 'Sisa saldo cuti kamu tidak cukup');
@@ -128,5 +135,15 @@ class CutiTahunanController extends Controller
         $fileName = 'Surat-Cuti-' . $leave->user->name;
         $document->saveAs($fileName . '.docx');
         return response()->download($fileName . '.docx')->deleteFileAfterSend(true);
+    }
+
+    // mark as read
+    public function markAsRead()
+    {
+        $notifications = Auth::user()->unreadNotifications->first();
+        if ($notifications != null) {
+            Auth::user()->unreadNotifications->markAsRead();
+            return redirect()->back();
+        }
     }
 }
