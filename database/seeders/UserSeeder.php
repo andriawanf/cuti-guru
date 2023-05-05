@@ -2,10 +2,12 @@
 
 namespace Database\Seeders;
 
+use App\Models\Cuti;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
+use Faker\Factory as Faker;
 
 class UserSeeder extends Seeder
 {
@@ -50,5 +52,24 @@ class UserSeeder extends Seeder
             'level' => 'kepala sekolah',
             'active' => 1,
         ]);
+
+        $faker = Faker::create('id_ID');
+
+        for ($i = 1; $i <= 50; $i++) {
+
+            // insert data ke table pegawai menggunakan Faker
+            User::create([
+                'name' => $faker->name(),
+                'pangkat' => 'Guru',
+                'jabatan' => 'Guru',
+                'satuan_organisasi' => 'Guru',
+                'email' => $faker->email(),
+                'password' => Hash::make('password'),
+                'nip' => $faker->randomNumber($nbDigits = NULL, $strict = false),
+                'saldo_cuti' => $faker->numberBetween(1,12),
+                'level' => 'Guru',
+                'active' => 1,
+            ]);
+        }
     }
 }

@@ -54,4 +54,15 @@ class User extends Authenticatable
     {
         return $this->hasMany(Cuti::class);
     }
+
+    public function scopeSearch($query, $term)
+    {
+        $term = "%$term%";
+        $query->where(function($query) use ($term) {
+            $query->where('name', 'LIKE', $term)
+                ->orWhere('nip', 'like', $term)
+                ->orWhere('jabatan', 'like', $term)
+                ->orWhere('saldo_cuti', 'like', $term);
+        });
+    }
 }

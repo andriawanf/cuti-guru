@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Validator;
 
 class ListUserController extends Controller
 {
-    public function listUser()
+    public function listUser(Request $request)
     {
         if (Auth::user()->level == 'kepala sekolah'){
             $user = User::all();
@@ -18,9 +18,19 @@ class ListUserController extends Controller
                 'user' => $user,
             ]);
         } elseif (Auth::user()->level == 'admin') {
-            $user = User::where('level', '=', 'Guru')->get();
+
+            $keyword = $request->keyword;
+            // $user = User::where('level', '=', 'Guru')->paginate(10)->onEachSide(2);
+            $user = User::where('name', 'LIKE', '%'.$keyword.'%')
+                ->orWhere('nip', 'LIKE', '%'.$keyword.'%')
+                ->orWhere('jabatan', 'LIKE', '%'.$keyword.'%')
+                ->paginate(10);
+                $user->appends($request->all());
+            $nomor = 1 + (($user->currentPage()-1) * $user->perPage());
             return view('admin.list-user', [
                 'user' => $user,
+                'nomor' => $nomor,
+                'keyword' => $keyword
             ]);
         }
     }
